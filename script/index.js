@@ -2,7 +2,7 @@
 const loadCategories = () => {
     fetch("https://openapi.programming-hero.com/api/categories")
     .then((res) => res.json())
-    .then((apData) => displayCategories(apData.categories));
+    .then((acData) => displayCategories(acData.categories));
 };
 
 const displayCategories = (allCategories) => {
@@ -15,7 +15,7 @@ const displayCategories = (allCategories) => {
         const ctgDiv = document.createElement("div");
         ctgDiv.innerHTML = `
             
-            <button class="text-lg hover:bg-green-700 hover:text-white transition md:w-full text-left md:pl-2 py-1 ">${allCategory.category_name}</button>
+            <button class="text-lg hover:bg-green-700 hover:text-white transition rounded w-2/3 md:w-full text-left md:pl-2 py-1 ">${allCategory.category_name}</button>
         `;
 
         ctgContainer.append(ctgDiv);
@@ -23,6 +23,40 @@ const displayCategories = (allCategories) => {
 
 };
 
-
-
 loadCategories();
+
+
+
+
+
+const loadAllPlants = () => {
+    fetch("https://openapi.programming-hero.com/api/plants")
+    .then((res) => res.json())
+    .then((apData) => displayAllPlants(apData.plants));
+};
+
+const displayAllPlants = (plants) => {
+    const cardContainer = document.getElementById("card-container");
+    cardContainer.innerHTML = "";
+
+    for(let plant of plants){
+
+        const cardDiv = document.createElement("div");
+        cardDiv.innerHTML = `
+            <div class="bg-white space-y-3 p-3">
+                    <img class="w-full h-50 object-cover rounded-lg" src="${plant.image}" alt="">
+                    <h2 class="text-lg font-semibold">${plant.name}</h2>
+                    <p class="text-gray-700 line-clamp-3 text-sm">${plant.description}</p>
+                    <div class="flex justify-between text-base font-medium">
+                        <h2 class="bg-[#DCFCE7] px-3 py-1 rounded-2xl text-green-800">${plant.category}</h2>
+                        <h2>৳${plant.price}</h2>
+                    </div>
+                    <button class="bg-green-700 text-white w-full  py-2 rounded-full text-lg font-medium  hover:bg-slate-200 hover:text-green-700 border border-green-700 transition duration-30">Add to Cart</button>
+            </div>
+        `;
+
+        cardContainer.append(cardDiv);
+    }
+};
+
+loadAllPlants();
