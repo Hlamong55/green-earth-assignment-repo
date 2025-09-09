@@ -13,8 +13,22 @@ const loadCtgPlant = (id) => {
     const url = `https://openapi.programming-hero.com/api/category/${id}`;
     fetch(url)
     .then((res) => res.json())
-    .then((data) => displayCtgPlant(data.plants));
+    .then((data) => {
+        removeActive();
+        const clickBtn = document.getElementById(`hl-btn-${id}`);
+        clickBtn.classList.add("active");
+        displayCtgPlant(data.plants)
+    });
 };
+
+
+
+const removeActive = () =>{
+    const highlights = document.querySelectorAll(".hl-btn");
+    highlights.forEach((btn) => btn.classList.remove("active"));
+}
+
+
 
 const displayCtgPlant = (ctgPlants) => {
     const cardContainer = document.getElementById("card-container");
@@ -53,7 +67,7 @@ const displayCategories = (allCategories) => {
         const ctgDiv = document.createElement("div");
         ctgDiv.innerHTML = `
             
-            <button onclick="loadCtgPlant(${allCategory.id})" class="block w-full text-lg hover:bg-green-700 hover:text-white transition  rounded  py-1 md:px-5">${allCategory.category_name}</button>
+            <button id="hl-btn-${allCategory.id}" onclick="loadCtgPlant(${allCategory.id})" class="block w-full text-lg hover:bg-green-700 hover:text-white transition  rounded  py-1 md:px-5 hl-btn">${allCategory.category_name}</button>
         `;
 
         ctgContainer.append(ctgDiv);
