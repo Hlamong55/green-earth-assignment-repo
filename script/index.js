@@ -80,6 +80,41 @@ loadCategories();
 
 
 
+
+
+
+// load Plant Detail = modal
+const loadPlantDetail = async(id) => {
+    const url = `https://openapi.programming-hero.com/api/plant/${id}`;
+    const res =await fetch(url);
+    const details = await res.json();
+    displayPlantDetails(details.plants);
+};
+
+const displayPlantDetails = (plantD) =>{
+    console.log(plantD);
+    const detailsContainer = document.getElementById("details-container");
+    detailsContainer.innerHTML = `
+    
+     <div class="space-y-2">
+            <h2  class="text-2xl font-bold">${plantD.name}</h2>
+        <img class="w-full h-60 object-cover rounded-lg" src="${plantD.image}" alt="">
+
+        <h2 class="text-lg font-semibold">Category: <span class="text-gray-500 text-sm ">${plantD.category}</span></h2>
+        <h2 class="text-lg font-semibold">Price: <span class="text-gray-500 text-sm"> ৳${plantD.price}</span></h2>
+        <h2 class="text-lg font-semibold">Description: <span class="text-gray-500 text-sm text-justify">${plantD.description}</span></h2>
+
+     </div>
+    
+    `
+    document.getElementById("my_modal_5").showModal();
+}
+
+
+
+
+
+
 // get all plants
 const loadAllPlants = () => {
     fetch("https://openapi.programming-hero.com/api/plants")
@@ -96,8 +131,8 @@ const displayAllPlants = (plants) => {
         const cardDiv = document.createElement("div");
         cardDiv.innerHTML = `
             <div class="bg-white space-y-3 p-4">
-                    <img class="w-full h-60 object-cover rounded-lg" src="${plant.image}" alt="">
-                    <h2 class="text-lg font-semibold">${plant.name}</h2>
+                    <img class="w-full h-64 object-cover rounded-lg" src="${plant.image}" alt="">
+                    <h2 onclick="loadPlantDetail(${plant.id})" class="text-lg font-semibold">${plant.name}</h2>
                     <p class="text-gray-700 line-clamp-3 text-sm">${plant.description}</p>
                     <div class="flex justify-between text-base font-medium">
                         <h2 class="bg-[#DCFCE7] px-3 py-1 rounded-2xl text-green-800">${plant.category}</h2>

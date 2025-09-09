@@ -82,6 +82,8 @@
       </div>
     </div>
 
+
+    
     <!-- banner -->
     <section class="bg-[#CFF0DC] flex gap-2 w-full mx-auto">
         <div class="left-div w-1/3 hidden md:block">
@@ -100,6 +102,8 @@
     </section>
 
 
+
+
     <!-- choose your tree -->
      <section class="bg-[#F0FDF4] mx-auto py-20">
         
@@ -109,7 +113,7 @@
         <div class="w-11/12 mx-auto flex flex-col md:flex-row gap-4 ">
 
             <!-- categories -->
-            <div id="ctg-container" class=" flex flex-wrap gap-5 items-start w-full md:w-[220px] md:flex-col md:gap-2 md:items-start md:pl-2 ">
+            <div id="ctg-container" class=" flex flex-wrap gap-5 items-start w-full md:w-[210px] md:flex-col md:gap-2 md:items-start md:pl-2 ">
                 
             </div>
 
@@ -121,7 +125,7 @@
 
             <!-- add to cart -->
             <div id="add-container" class="w-[200px]  bg-white p-4 rounded-lg shadow">
-
+                 
             </div>
             
         </div>
@@ -129,7 +133,25 @@
 
 
 
-    
+
+    <!-- Open the modal using ID.showModal() method -->
+     <!-- <button class="btn" onclick="my_modal_5.showModal()">open modal</button> -->
+
+     <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+    <div class="modal-box">
+    <div id="details-container" class="space-y-5">
+       
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <!-- if there is a button in form, it will close the modal -->
+        <button class="btn">Close</button>
+      </form>
+    </div>
+    </div>
+     </dialog>
+
+
      
 
     <!-- campaign section-->
@@ -151,6 +173,7 @@
             </div>
         </div>
       </section>
+
 
 
     <!-- Our Impact -->
