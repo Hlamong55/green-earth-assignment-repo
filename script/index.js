@@ -57,7 +57,7 @@ const displayCtgPlant = (ctgPlants) => {
 
          const cateDiv = document.createElement("div");
          cateDiv.innerHTML = `
-            <div class="bg-white space-y-3 p-4">
+            <div class="bg-white space-y-3 p-3 rounded">
                     <img class="w-full h-60 object-cover rounded-lg" src="${ctgPlant.image}" alt="">
                     <h2 class="text-lg font-semibold">${ctgPlant.name}</h2>
                     <p class="text-gray-700 line-clamp-3 text-sm">${ctgPlant.description}</p>
@@ -65,7 +65,7 @@ const displayCtgPlant = (ctgPlants) => {
                         <h2 class="bg-[#DCFCE7] px-3 py-1 rounded-2xl text-green-800">${ctgPlant.category}</h2>
                         <h2>৳${ctgPlant.price}</h2>
                     </div>
-                    <button class="bg-green-700 text-white w-full  py-2 rounded-full text-lg font-medium  hover:bg-slate-200 hover:text-green-700 border border-green-700 transition duration-30">Add to Cart</button>
+                    <button onclick='addToCart({name: "${ctgPlant.name}", price: ${ctgPlant.price}})' class="bg-green-700 text-white w-full  py-2 rounded-full text-lg font-medium  hover:bg-slate-200 hover:text-green-700 border border-green-700 transition duration-30">Add to Cart</button>
             </div>
         `;
         cardContainer.append(cateDiv);
@@ -150,7 +150,7 @@ const displayAllPlants = (plants) => {
 
         const cardDiv = document.createElement("div");
         cardDiv.innerHTML = `
-            <div class="bg-white space-y-3 p-4">
+            <div class="bg-white space-y-3 p-3 rounded">
                     <img class="w-full h-64 object-cover rounded-lg" src="${plant.image}" alt="">
                     <h2 onclick="loadPlantDetail(${plant.id})" class="text-lg font-semibold">${plant.name}</h2>
                     <p class="text-gray-700 line-clamp-3 text-sm">${plant.description}</p>
@@ -158,7 +158,7 @@ const displayAllPlants = (plants) => {
                         <h2 class="bg-[#DCFCE7] px-3 py-1 rounded-2xl text-green-800">${plant.category}</h2>
                         <h2>৳${plant.price}</h2>
                     </div>
-                    <button class="bg-green-700 text-white w-full  py-2 rounded-full text-lg font-medium  hover:bg-slate-200 hover:text-green-700 border border-green-700 transition duration-30">Add to Cart</button>
+                    <button onclick='addToCart({name: "${plant.name}", price: ${plant.price}})' class="bg-green-700 text-white w-full  py-2 rounded-full text-lg font-medium  hover:bg-slate-200 hover:text-green-700 border border-green-700 transition duration-30">Add to Cart</button>
             </div>
         `;
 
@@ -167,3 +167,57 @@ const displayAllPlants = (plants) => {
 };
 
 loadAllPlants();
+
+
+
+
+// add to cart
+let cart = [];
+
+const addToCart = (plant) => {
+    const exist = cart.find(item => item.name === plant.name);
+
+    if (exist) {
+        exist.quantity += 1;
+    } else {
+        cart.push({ ...plant, quantity: 1 });
+    }
+
+    updateCart();
+    alert(`${plant.name} added to cart!`);
+};
+
+
+const removeFromCart = (index) => {
+    cart.splice(index, 1);
+    updateCart();
+};
+
+
+const updateCart = () => {
+    const cartList = document.getElementById("cartList");
+    const totalPrice = document.getElementById("totalPrice");
+
+    cartList.innerHTML = "";
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+
+        const div = document.createElement("div");
+        div.className = "flex justify-between items-center bg-[#F0FDF4] px-2 py-2 rounded";
+
+        div.innerHTML = `
+            <div>
+                <p class="font-medium mb-1">${item.name}</p>
+                <p class="text-sm text-gray-600">৳${item.price} × ${item.quantity}</p>
+            </div>
+            <button onclick="removeFromCart(${index})" class="text-red-600 font-bold">❌</button>
+        `;
+
+        cartList.append(div);
+    });
+
+    totalPrice.textContent = "৳" + total;
+
+};
